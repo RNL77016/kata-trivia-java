@@ -104,6 +104,7 @@ public class Game implements IGame {
       if (player.isInPenaltyBox()) {
          if (isGettingOutOfPenaltyBox) {
             System.out.println("Answer was correct!!!!");
+            player.setInPenaltyBox(false);
             player.addCoin();
             System.out.println(player.getName()
                                + " now has "
