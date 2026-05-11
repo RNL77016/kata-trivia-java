@@ -50,29 +50,26 @@ public class Game implements IGame {
             isGettingOutOfPenaltyBox = true;
 
             System.out.println(player.getName() + " is getting out of the penalty box");
-            movePlayer(roll);
-
-            System.out.println(player.getName()
-                               + "'s new location is "
-                               + player.getPosition());
-            System.out.println("The category is " + currentCategory());
-            askQuestion();
+            executeTurn(player, roll);
          } else {
             System.out.println(player.getName() + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
          }
 
       } else {
-
-         movePlayer(roll);
-
-         System.out.println(player.getName()
-                            + "'s new location is "
-                            + player.getPosition());
-         System.out.println("The category is " + currentCategory());
-         askQuestion();
+         executeTurn(player, roll);
       }
 
+   }
+
+   private void executeTurn(Player player, int roll) {
+      movePlayer(roll);
+
+      System.out.println(player.getName()
+                         + "'s new location is "
+                         + player.getPosition());
+      System.out.println("The category is " + currentCategory());
+      askQuestion();
    }
 
    private void movePlayer(int roll) {
@@ -86,17 +83,13 @@ public class Game implements IGame {
 
 
    private String currentCategory() {
-      Player player = players.get(currentPlayer);
-      if (player.getPosition() - 1 == 0) return "Pop";
-      if (player.getPosition() - 1 == 4) return "Pop";
-      if (player.getPosition() - 1 == 8) return "Pop";
-      if (player.getPosition() - 1 == 1) return "Science";
-      if (player.getPosition() - 1 == 5) return "Science";
-      if (player.getPosition() - 1 == 9) return "Science";
-      if (player.getPosition() - 1 == 2) return "Sports";
-      if (player.getPosition() - 1 == 6) return "Sports";
-      if (player.getPosition() - 1 == 10) return "Sports";
-      return "Rock";
+      int position = players.get(currentPlayer).getPosition();
+      switch ((position - 1) % 4) {
+         case 0: return "Pop";
+         case 1: return "Science";
+         case 2: return "Sports";
+         default: return "Rock";
+      }
    }
 
    public boolean handleCorrectAnswer() {
