@@ -10,22 +10,13 @@ public class Game implements IGame {
    private static final int INITIAL_QUESTIONS = 50;
 
    java.util.List<Player> players = new ArrayList<>();
-
-   LinkedList popQuestions = new LinkedList();
-   LinkedList scienceQuestions = new LinkedList();
-   LinkedList sportsQuestions = new LinkedList();
-   LinkedList rockQuestions = new LinkedList();
+   QuestionDeck questionDeck;
 
    int currentPlayer = 0;
    boolean isGettingOutOfPenaltyBox;
 
    public Game() {
-      for (int i = 0; i < INITIAL_QUESTIONS; i++) {
-         popQuestions.addLast("Pop Question " + i);
-         scienceQuestions.addLast(("Science Question " + i));
-         sportsQuestions.addLast(("Sports Question " + i));
-         rockQuestions.addLast(createRockQuestion(i));
-      }
+      questionDeck = new QuestionDeck(INITIAL_QUESTIONS);
    }
 
    public String createRockQuestion(int index) {
@@ -89,14 +80,8 @@ public class Game implements IGame {
    }
 
    private void askQuestion() {
-      if (currentCategory() == "Pop")
-         System.out.println(popQuestions.removeFirst());
-      if (currentCategory() == "Science")
-         System.out.println(scienceQuestions.removeFirst());
-      if (currentCategory() == "Sports")
-         System.out.println(sportsQuestions.removeFirst());
-      if (currentCategory() == "Rock")
-         System.out.println(rockQuestions.removeFirst());
+      String category = currentCategory();
+      System.out.println(questionDeck.nextQuestion(category));
    }
 
 
