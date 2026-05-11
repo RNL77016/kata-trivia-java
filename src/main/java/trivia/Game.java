@@ -63,8 +63,7 @@ public class Game implements IGame {
             isGettingOutOfPenaltyBox = true;
 
             System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-            playerPositions[currentPlayer] = playerPositions[currentPlayer] + roll;
-            if (playerPositions[currentPlayer] > BOARD_SIZE) playerPositions[currentPlayer] = playerPositions[currentPlayer] - BOARD_SIZE;
+            movePlayer(roll);
 
             System.out.println(players.get(currentPlayer)
                                + "'s new location is "
@@ -78,8 +77,7 @@ public class Game implements IGame {
 
       } else {
 
-         playerPositions[currentPlayer] = playerPositions[currentPlayer] + roll;
-         if (playerPositions[currentPlayer] > BOARD_SIZE) playerPositions[currentPlayer] = playerPositions[currentPlayer] - BOARD_SIZE;
+         movePlayer(roll);
 
          System.out.println(players.get(currentPlayer)
                             + "'s new location is "
@@ -88,6 +86,11 @@ public class Game implements IGame {
          askQuestion();
       }
 
+   }
+
+   private void movePlayer(int roll) {
+      playerPositions[currentPlayer] = playerPositions[currentPlayer] + roll;
+      if (playerPositions[currentPlayer] > BOARD_SIZE) playerPositions[currentPlayer] = playerPositions[currentPlayer] - BOARD_SIZE;
    }
 
    private void askQuestion() {
@@ -126,13 +129,11 @@ public class Game implements IGame {
                                + " Gold Coins.");
 
             boolean winner = isGameStillInProgress();
-            currentPlayer++;
-            if (currentPlayer == players.size()) currentPlayer = 0;
+            nextPlayer();
 
             return winner;
          } else {
-            currentPlayer++;
-            if (currentPlayer == players.size()) currentPlayer = 0;
+            nextPlayer();
             return true;
          }
 
@@ -147,11 +148,15 @@ public class Game implements IGame {
                             + " Gold Coins.");
 
          boolean winner = isGameStillInProgress();
-         currentPlayer++;
-         if (currentPlayer == players.size()) currentPlayer = 0;
+         nextPlayer();
 
          return winner;
       }
+   }
+
+   private void nextPlayer() {
+      currentPlayer++;
+      if (currentPlayer == players.size()) currentPlayer = 0;
    }
 
    public boolean wrongAnswer() {
@@ -159,8 +164,7 @@ public class Game implements IGame {
       System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
       playerInPenaltyBox[currentPlayer] = true;
 
-      currentPlayer++;
-      if (currentPlayer == players.size()) currentPlayer = 0;
+      nextPlayer();
       return true;
    }
 
