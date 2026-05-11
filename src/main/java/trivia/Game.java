@@ -5,6 +5,10 @@ import java.util.LinkedList;
 
 // REFACTOR ME
 public class Game implements IGame {
+   private static final int BOARD_SIZE = 12;
+   private static final int WINNING_COINS = 6;
+   private static final int INITIAL_QUESTIONS = 50;
+
    ArrayList players = new ArrayList();
    int[] playerPositions = new int[6];
    int[] playerCoins = new int[6];
@@ -19,7 +23,7 @@ public class Game implements IGame {
    boolean isGettingOutOfPenaltyBox;
 
    public Game() {
-      for (int i = 0; i < 50; i++) {
+      for (int i = 0; i < INITIAL_QUESTIONS; i++) {
          popQuestions.addLast("Pop Question " + i);
          scienceQuestions.addLast(("Science Question " + i));
          sportsQuestions.addLast(("Sports Question " + i));
@@ -60,7 +64,7 @@ public class Game implements IGame {
 
             System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
             playerPositions[currentPlayer] = playerPositions[currentPlayer] + roll;
-            if (playerPositions[currentPlayer] > 12) playerPositions[currentPlayer] = playerPositions[currentPlayer] - 12;
+            if (playerPositions[currentPlayer] > BOARD_SIZE) playerPositions[currentPlayer] = playerPositions[currentPlayer] - BOARD_SIZE;
 
             System.out.println(players.get(currentPlayer)
                                + "'s new location is "
@@ -75,7 +79,7 @@ public class Game implements IGame {
       } else {
 
          playerPositions[currentPlayer] = playerPositions[currentPlayer] + roll;
-         if (playerPositions[currentPlayer] > 12) playerPositions[currentPlayer] = playerPositions[currentPlayer] - 12;
+         if (playerPositions[currentPlayer] > BOARD_SIZE) playerPositions[currentPlayer] = playerPositions[currentPlayer] - BOARD_SIZE;
 
          System.out.println(players.get(currentPlayer)
                             + "'s new location is "
@@ -162,6 +166,6 @@ public class Game implements IGame {
 
 
    private boolean isGameStillInProgress() {
-      return !(playerCoins[currentPlayer] == 6);
+      return !(playerCoins[currentPlayer] == WINNING_COINS);
    }
 }
